@@ -98,7 +98,7 @@ struct TscClock {
             clock_gettime(CLOCK_MONOTONIC_RAW, &beginTime);
             initialEndTsc = rdTsc();
 
-            for (uint64_t i = 0; i < TimeConstant::skNsPerMs * kPauseMultiplier; i++) {
+            for (uint64_t j = 0; j < TimeConstant::skNsPerMs * kPauseMultiplier; j++) {
                 // asm volatile("pause" :::);
                 __builtin_ia32_pause();
             }
@@ -125,13 +125,13 @@ struct TscClock {
     void calibrateDelayNsOffset(uint32_t loopCnt = kCalibrateLoopCnt) {
         delayNsOffsetTicks_ = 0.0;
         delayNsOffsetNs_ = 0.0;
-        loopCnt = loopCnt * kPauseMultiplier * kDelayOffsetMultiplier;
+        const uint64_t cnt = loopCnt * kPauseMultiplier * kDelayOffsetMultiplier;
         uint64_t beginTick = rdTsc();
-        for (uint32_t i = 0; i < loopCnt; i++) {
+        for (uint64_t i = 0; i < cnt; i++) {
             delayNs(1);
         }
         uint64_t endTick = rdTsc();
-        delayNsOffsetTicks_ = static_cast<double>(endTick - beginTick) / loopCnt;
+        delayNsOffsetTicks_ = static_cast<double>(endTick - beginTick) / cnt;
         delayNsOffsetNs_ = delayNsOffsetTicks_ * nsPerTick_;
     }
 #pragma GCC pop_options
