@@ -13,7 +13,7 @@ int32_t main(int32_t argc, char* argv[]) {
     uint64_t startTsc = 0, endTsc = 0;
     TscClock& clock = TscClock::getInstance();
     clock.calibrate(371);
-    clock.show();
+    std::cout << clock << std::endl;
 
     std::vector<int32_t> vecDelayNs = {
         0,     1,     5,     10,    15,    20,    25,    30,    40,    50,    70,    80,    90,    100,
