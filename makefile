@@ -10,7 +10,7 @@ LDFlags = -v
 CurrDir = ./
 IncludeDir = -I./$(CurrDir)
 
-all: tob tc
+all: tc
 
 $(Object):%.o: %.cpp
 	$(CC) $(CFlags) $(OFlags) $(IncludeDir) -c $< -o $@
